@@ -7,6 +7,7 @@ import (
 	"github.com/go-resty/resty"
 	"github.com/rideways/pimonitor/blink"
 	"github.com/rideways/pimonitor/colour"
+	"github.com/rideways/pimonitor/monitor"
 	"github.com/rideways/pimonitor/sensu"
 )
 
@@ -47,12 +48,12 @@ func main() {
 		CriticalColour: criticalColour,
 		UnknownColour:  unknownColour}
 
-	blink := blink.Blink{
+	monitor := monitor.Monitor{
 		Blinker:          bb,
 		Checker:          checker,
 		ColourCalculator: colourCalculator}
 
-	err := blink.DoIt()
+	err := monitor.Monitor()
 
 	if err != nil {
 		os.Exit(1)

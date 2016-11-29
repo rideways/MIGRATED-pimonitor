@@ -1,19 +1,20 @@
-package blink
+package monitor
 
 import (
+	"github.com/rideways/pimonitor/blink"
 	"github.com/rideways/pimonitor/colour"
 	"github.com/rideways/pimonitor/sensu"
 )
 
-// Blink blink blink
-type Blink struct {
-	Blinker          IBlinker
+// Monitor blink blink
+type Monitor struct {
+	Blinker          blink.IBlinker
 	Checker          sensu.IChecker
 	ColourCalculator colour.IColourCalculator
 }
 
-// DoIt does it
-func (b Blink) DoIt() error {
+// Monitor monitors it
+func (b Monitor) Monitor() error {
 	checks, err := b.Checker.GetChecks()
 
 	if err != nil {
