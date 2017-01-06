@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"os"
 
 	"github.com/go-resty/resty"
 	"github.com/rideways/pimonitor/blink"
@@ -53,9 +52,5 @@ func main() {
 		Checker:          checker,
 		ColourCalculator: colourCalculator}
 
-	err := monitor.Monitor()
-
-	if err != nil {
-		os.Exit(1)
-	}
+	monitor.Monitor()
 }
