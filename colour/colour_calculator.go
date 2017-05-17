@@ -24,6 +24,7 @@ type ColourCalculator struct {
 func (calculator ColourCalculator) Calculator(checkResult *models.SensuCheck) string {
 	warn := 0
 	critical := 0
+	unknown := 0
 
 	if checkResult == nil {
 		log.Println("ok")
@@ -37,11 +38,13 @@ func (calculator ColourCalculator) Calculator(checkResult *models.SensuCheck) st
 				warn++
 			case 2:
 				critical++
+			case 3:
+				unknown++
 			}
 		}
 	}
 
-	if warn == 0 && critical == 0 {
+	if warn == 0 && critical == 0 && unknown == 0 {
 		fmt.Println("ok")
 		return calculator.OkColour
 	}
