@@ -26,16 +26,25 @@ func TestSingleWarning(t *testing.T) {
 func TestWarningAndOk(t *testing.T) {
 	x := ColourCalculator{OkColour: "green", WarningColour: "amber", CriticalColour: "red", UnknownColour: "purple"}
 	data := &models.SensuCheck{}
-	y := `[{"check": {"handle":true, "status": 1}},{"check": {"handle":true, "status": 0}}]`
+	y := `[{"check": {"handle":true, "status": 1}},{"check": {"handle":true, "status": 0}},{"check": {"handle":true, "status": 3}}]`
 
 	json.Unmarshal([]byte(y), &data)
 	assert.Equal(t, "amber", x.Calculator(data), "should be amber")
 }
 
+func TestUnknownAndOk(t *testing.T) {
+	x := ColourCalculator{OkColour: "green", WarningColour: "amber", CriticalColour: "red", UnknownColour: "purple"}
+	data := &models.SensuCheck{}
+	y := `[{"check": {"handle":true, "status": 3}},{"check": {"handle":true, "status": 0}}]`
+
+	json.Unmarshal([]byte(y), &data)
+	assert.Equal(t, "purple", x.Calculator(data), "should be purple")
+}
+
 func TestWarningAndCritical(t *testing.T) {
 	x := ColourCalculator{OkColour: "green", WarningColour: "amber", CriticalColour: "red", UnknownColour: "purple"}
 	data := &models.SensuCheck{}
-	y := `[{"check": {"handle":true, "status": 1}},{"check": {"handle":true, "status": 2}}]`
+	y := `[{"check": {"handle":true, "status": 1}},{"check": {"handle":true, "status": 2}},{"check": {"handle":true, "status": 3}}]`
 
 	json.Unmarshal([]byte(y), &data)
 	assert.Equal(t, "red", x.Calculator(data), "should be red")
