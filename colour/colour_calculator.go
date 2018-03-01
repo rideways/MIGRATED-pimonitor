@@ -32,7 +32,7 @@ func (calculator ColourCalculator) Calculator(checkResult *models.SensuCheck) st
 	}
 
 	for _, v := range *checkResult {
-		if v.Check.Handle {
+		if v.Check.Handle && !v.Silenced {
 			switch v.Check.Status {
 			case 1:
 				warn++

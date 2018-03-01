@@ -59,3 +59,13 @@ func TestWarningAndUnhandledCritical(t *testing.T) {
 
 	assert.Equal(t, "amber", x.Calculator(data), "should be amber")
 }
+
+func TestWarningAndSilencedCritical(t *testing.T) {
+	x := ColourCalculator{OkColour: "green", WarningColour: "amber", CriticalColour: "red", UnknownColour: "purple"}
+	data := &models.SensuCheck{}
+	y := `[{"check": {"handle":true, "status": 1}},{"check": {"handle":true, "status": 2}, "silenced":true}]`
+
+	json.Unmarshal([]byte(y), &data)
+
+	assert.Equal(t, "amber", x.Calculator(data), "should be amber")
+}
